@@ -1,12 +1,15 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import deezer
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.') # '.' ka matlab isi folder mein HTML hai
+
 client = deezer.Client()
 
+# Home route jo HTML file dikhayega
 @app.route('/')
-def index():
-    return jsonify({"status": "online", "message": "High-Res Music Engine is running"})
+def home():
+    return send_from_directory('.', 'index.html')
 
 @app.route('/api/search')
 def search_music():
@@ -31,4 +34,4 @@ def search_music():
 
 if __name__ == "__main__":
     app.run()
-  
+    
